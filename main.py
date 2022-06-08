@@ -37,8 +37,9 @@ def bisection_method(polynomial, start_point, end_point, epsilon):
 def newton_method(polynomial, start_point, end_point, epsilon):
     polynomial_derivative = derivative(polynomial)
     x = (start_point + end_point)/2
-
+    print(f'x = ({start_point} + {end_point})/2')
     for i in range(30):
+        print(f'x = {x} - {f(polynomial, x)}/{f(polynomial_derivative, x)} = {x - f(polynomial, x)/f(polynomial_derivative, x)}')
         x = x - f(polynomial, x)/f(polynomial_derivative, x)
         if abs(f(polynomial, x)) < epsilon:
             return Result(i + 1, x)
@@ -46,15 +47,21 @@ def newton_method(polynomial, start_point, end_point, epsilon):
 
 
 def secant_method(polynomial, start_point, end_point, epsilon):
+    print(f'a = {start_point}')
     a = start_point
+    print(f'b = {end_point}')
     b = end_point
     i = 0
     while abs(f(polynomial, b) - f(polynomial, a)) > epsilon:
+        print(f'a = {b}')
+        print(f'b = ({a}*{f(polynomial, b)} - {b}*{f(polynomial, a)})/({f(polynomial, b)} - {f(polynomial, a)}) = {(a*f(polynomial, b) - b*f(polynomial, a))/(f(polynomial, b) - f(polynomial, a))}')
+        print()
         b, a = (a*f(polynomial, b) - b*f(polynomial, a))/(f(polynomial, b) - f(polynomial, a)), b
         if abs(f(polynomial, b)) < epsilon:
             return Result(i + 1, b)
         i += 1
     return None
+
 
 def find_max(function):
     function_d = function.diff(z)
